@@ -28,4 +28,18 @@ const add = async (name) => {
   return result;
 };
 
-module.exports = { getAll, getById, add };
+const update = async (id, name) => {
+  const [results] = await connection.execute(
+    'UPDATE StoreManager.products SET name = ? WHERE id = ?',
+    [name, id],
+  );
+  return results.affectedRows;
+};
+
+const erase = async (id) => {
+  connection.execute(
+    'DELETE FROM StoreManager.products WHERE id = ?', [id],
+  );
+};
+
+module.exports = { getAll, getById, add, update, erase };

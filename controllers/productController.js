@@ -49,4 +49,36 @@ const add = async (req, res) => {
   }
 };
 
-module.exports = { getAll, getById, add };
+const update = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name } = req.body;
+
+    const product = await productService.update(id, name);
+    if (!product || product.length < 1) {
+      return res.status(httpCodes.NOT_FOUND).json({ message: 'Product not found' });
+    }
+    const updateProduct = await productService.updategetById(id);
+    
+    res.status(httpCodes.OK).json(updateProduct);
+  } catch (err) {
+    res.status(httpCodes.INTERNAL_SERVER_ERROR).send(err);
+  }
+};
+
+const erase = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const product = await productService.erase(id);
+
+    if (product === null || product < 1) {
+      return res.status(httpCodes.NO_CONTENT).json({ message: 'Product not found' });
+    }
+    res.status(httpCodes.OK);
+  } catch (err) {
+    res.status(httpCodes.INTERNAL_SERVER).send(err);
+  }
+};
+
+module.exports = { getAll, getById, add, update, erase };

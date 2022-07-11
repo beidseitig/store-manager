@@ -18,4 +18,15 @@ const add = async (name) => {
   return product;
 };
 
-module.exports = { getAll, getById, add };
+const update = async (id, name) => {
+  const product = await productModel.update(id, name);
+  return product;
+};
+
+const erase = async (id) => {
+  const product = await productModel.erase(id);
+  if (!product) return [];
+  return product;
+};
+
+module.exports = { getAll, getById, add, update, erase };
