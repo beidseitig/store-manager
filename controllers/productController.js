@@ -58,7 +58,7 @@ const update = async (req, res) => {
     if (!product || product.length < 1) {
       return res.status(httpCodes.NOT_FOUND).json({ message: 'Product not found' });
     }
-    const updateProduct = await productService.updategetById(id);
+    const updateProduct = await productService.getById(id);
     
     res.status(httpCodes.OK).json(updateProduct);
   } catch (err) {
@@ -77,7 +77,7 @@ const erase = async (req, res) => {
     }
     res.status(httpCodes.OK);
   } catch (err) {
-    res.status(httpCodes.INTERNAL_SERVER).send(err);
+    res.status(httpCodes.INTERNAL_SERVER_ERROR).send(err);
   }
 };
 

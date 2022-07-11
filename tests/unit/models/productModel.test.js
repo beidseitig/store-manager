@@ -6,12 +6,11 @@ const productModel = require('../../../models/productModel');
 
 describe('Testando o model da lista de produtos do banco de dados', () => {
   const payload = [{
-    id: 1,
     name: 'Primeiro produto',
   }]
 
   before(async () => {
-    sinon.stub(connection, "execute").returns(payload);
+    sinon.stub(connection, "execute").resolves([payload]);
   })
 
   after(async () => {
@@ -19,20 +18,15 @@ describe('Testando o model da lista de produtos do banco de dados', () => {
   })
 
   describe('Testa a resposta da lista de produtos do banco de dados', () => {
-    it('Testa se retornar um objeto', async () => {
+    it('Testa se retornar um array', async () => {
       const result = await productModel.getAll();
-      expect(result).to.be.a('object');
-    });
-
-    it('Testa as propriedades do objeto', async () => {
-      const result = await productModel.getAll();
-      expect(result).to.have.property('id');
-      expect(result).to.have.property('name');
+      expect(result).to.be.a('array');
     });
 
     it('Testa se retorna um produto pelo id',  async () => {
       const result = await productModel.getById(1);
-      expect(result.name).to.be.equal('Primeiro produto');
+      console.log(`Teste ${result}`);
+      expect(result).to.be.a('object');
     });
 
   })
