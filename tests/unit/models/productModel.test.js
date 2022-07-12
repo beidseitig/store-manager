@@ -29,4 +29,18 @@ describe('Testando o model da lista de produtos do banco de dados', () => {
     });
 
   })
+
+  describe('Testa o cadastro de novos produtos',  () => {
+    it('Testa se retornar um array', async () => {
+      const result = await productModel.add(payload);
+      expect(result).to.be.a('object');
+    });
+
+    it('Testa as propriedades do novo produto',  async () => {
+      const result = await productModel.add('Primeiro produto');
+      expect(result).to.have.property('id');
+      expect(result).to.have.property('name');
+    });
+
+  })
 })
