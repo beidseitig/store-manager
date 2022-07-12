@@ -8,13 +8,15 @@ describe('Testa o controller', () => {
   describe('Testa se o payload é válido', async () => {
     const response = {};
     const request = {};
+    const payload = [{
+    name: 'Primeiro produto',
+  }]
 
     before(async () => {
-      request.body = {};
       response.status = sinon.stub().returns(response);
-      response.json = sinon.stub().returns();
+      response.json = sinon.stub().returns(payload);
 
-      sinon.stub(productService, "getAll").returns([{}]);
+      sinon.stub(productService, "getAll").resolves(payload);
     })
 
     after(async () => {
@@ -28,7 +30,7 @@ describe('Testa o controller', () => {
 
     it('Testa se retorna um arquivo json', async () => {
       await productController.getAll(request, response);
-      expect(response.json.calledWith([{}])).to.be.true;
+      expect(response.json.calledWith(payload)).to.equal(true);
     })
   })
 

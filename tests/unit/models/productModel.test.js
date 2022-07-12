@@ -25,7 +25,6 @@ describe('Testando o model da lista de produtos do banco de dados', () => {
 
     it('Testa se retorna um produto pelo id',  async () => {
       const result = await productModel.getById(1);
-      console.log(`Teste ${result}`);
       expect(result).to.be.a('object');
     });
 

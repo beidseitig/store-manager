@@ -6,12 +6,12 @@ const productService = require('../../../services/productService');
 
 describe('Testando a lista de produtos do banco de dados', () => {
   const payload = [{
-    id: 1,
     name: 'Primeiro produto',
   }]
 
   before(async () => {
     sinon.stub(productModel, "getAll").returns(payload);
+    sinon.stub(productModel, "getById").returns(payload[0]);
   })
 
   after(async () => {
@@ -24,15 +24,9 @@ describe('Testando a lista de produtos do banco de dados', () => {
       expect(result).to.be.a('array');
     });
 
-    it('Testa as propriedades do objeto', async () => {
-      const result = await productService.getAll();
-      expect(result).to.have.property('id');
-      expect(result).to.have.property('name');
-    });
-
     it('Testa se retorna um produto pelo id',  async () => {
       const result = await productService.getById(1);
-      expect(result.name).to.be.equal('Primeiro produto');
+      expect(result).to.be.a('object');
     });
   })
 })
